@@ -1,6 +1,6 @@
 # java-mongodb-sample
 
-Sample application which uses a MongoDb. 
+Sample application which uses a MongoDb.
 
 Sample application which uses a MongoDb. The application is starting a Http server on port `8080` to query and manipulate the database.
 
