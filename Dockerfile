@@ -1,6 +1,6 @@
 # Image
 # FROM ubuntu:latest
-FROM maven:3.2-jdk-7-onbuild
+FROM maven:3.3-jdk-8-onbuild
 CMD ["mvn compile"]
 
 # File Author / Maintainer
