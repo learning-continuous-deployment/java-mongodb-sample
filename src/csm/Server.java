@@ -1,6 +1,7 @@
-package csm; 
+package csm;
 
 import java.io.IOException;
+import java.util.Map;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 import org.glassfish.grizzly.http.server.ServerConfiguration;
@@ -14,14 +15,26 @@ import csm.httphandler.GetEntries;
 
 public class Server {
 
+	private final static String DB_ENV_NAME = "MONGO_PORT";
+
 	private static MongoDatabase database;
 	private static MongoClient mongoClient;
 
 	private static void initMongoClient() {
-		mongoClient = new MongoClient();
-		// mongoClient = new MongoClient(new MongoClientURI(args[0]));
-
+		String address = getDatabaseEnv();
+		if (address != null) {
+			address =  address.substring(6);
+			System.out.println(address);
+			mongoClient = new MongoClient(address);
+		} else {
+			mongoClient = new MongoClient();
+		}
 		database = mongoClient.getDatabase("mydb");
+	}
+
+	private static String getDatabaseEnv() {
+		Map<String, String> env = System.getenv();
+		return env.get(DB_ENV_NAME);
 	}
 
 	public static MongoDatabase getDatabase() {
