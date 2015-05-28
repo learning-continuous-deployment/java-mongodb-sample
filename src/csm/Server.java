@@ -21,13 +21,16 @@ public class Server {
 	private static MongoClient mongoClient;
 
 	private static void initMongoClient() {
-		String address= getDatabaseEnv();
-		address.substring(6);
-			
-		mongoClient = new MongoClient(address);
+		String address = getDatabaseEnv();
+		if (address != null) {
+			address =  address.substring(6);
+			System.out.println(address);
+			mongoClient = new MongoClient(address);
+		} else {
+			mongoClient = new MongoClient();
+		}
 		database = mongoClient.getDatabase("mydb");
 	}
-
 
 	private static String getDatabaseEnv() {
 		Map<String, String> env = System.getenv();
