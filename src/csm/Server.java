@@ -1,6 +1,5 @@
 package csm;
 
-import java.io.IOException;
 import java.util.Map;
 
 import org.glassfish.grizzly.http.server.HttpServer;
@@ -23,7 +22,8 @@ public class Server {
 	private static void initMongoClient() {
 		String address = getDatabaseEnv();
 		if (address != null) {
-			System.out.println(String.format("Connecting to database: %s", address));
+			System.out.println(String.format("Connecting to database: %s",
+					address));
 			address = address.substring(6);
 			mongoClient = new MongoClient(address);
 		} else {
@@ -41,7 +41,7 @@ public class Server {
 		return database;
 	}
 
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws Exception {
 		initMongoClient();
 
 		HttpServer server = HttpServer.createSimpleServer();
@@ -53,9 +53,8 @@ public class Server {
 
 		server.start();
 
-		try {
+		synchronized (server) {
 			server.wait();
-		} catch (Exception e) {
 		}
 	}
 
