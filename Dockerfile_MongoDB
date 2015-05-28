@@ -8,14 +8,10 @@ RUN echo 'deb http://downloads-distro.mongodb.org/repo/ubuntu-upstart dist 10gen
 # Update apt-get sources AND install MongoDB
 RUN apt-get update && apt-get install -y mongodb-org
 
-# Create the MongoDB data directory
-#probably temporary, could be replaced by --volume-from, when running the container
-VOLUME  /data/db
-
 # Expose port 27017 from the container to the host
 EXPOSE 27017
 
 # Set usr/bin/mongod as the dockerized entry-point application
 ENTRYPOINT /usr/bin/mongod
 
-
+#Attention this Dockerfile should be used with an external volume /data/db. Therefore run it with the following command: docker run -d -p :27017 --volumes-from data_container --name mongodb mongodb_$BUILD_ID"  
