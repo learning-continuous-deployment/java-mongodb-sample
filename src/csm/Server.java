@@ -23,8 +23,8 @@ public class Server {
 	private static void initMongoClient() {
 		String address = getDatabaseEnv();
 		if (address != null) {
-			address =  address.substring(6);
-			System.out.println(address);
+			System.out.println(String.format("Connecting to database: %s", address));
+			address = address.substring(6);
 			mongoClient = new MongoClient(address);
 		} else {
 			mongoClient = new MongoClient();
@@ -53,8 +53,10 @@ public class Server {
 
 		server.start();
 
-		System.out.println("Press any key to stop the server...");
-		System.in.read();
+		try {
+			server.wait();
+		} catch (Exception e) {
+		}
 	}
 
 }
